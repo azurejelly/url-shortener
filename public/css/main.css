@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: black;
+    color: white;
+    position: absolute;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.login-alert::before {
+    content: url("/imgs/warning.svg");
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.login-alert {
+    display: inline-block;
+    padding: 20px;
+    background-color: red;
+    color: white;
+    margin-bottom: 15px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.login-form {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.logout-form {
+    text-align: center;
+    margin: 0 auto;
+}
+.error-message {
+    text-align: center;
+    line-height: 20px;
+    color: white;
+}
+
+h1 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+p {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}

@@ -2,13 +2,13 @@ import { NextFunction, Response, Request } from "express";
 import logger from "../lib/logger";
 
 const titles = {
-    500: "Internal Server Error",
-    404: "Not Found",
+    500: "internal server error",
+    404: "not found",
 };
 
 const descriptions = {
-    500: "An internal error has occurred and the server is unable to handle this request.",
-    404: "The requested resource was not found in this server.",
+    500: "an internal error has occurred and the server is unable to handle this request.",
+    404: "the requested resource was not found in this server.",
 };
 
 const errorHandler = (err: Error, req: Request, res: Response, _next: NextFunction) => {
@@ -16,7 +16,7 @@ const errorHandler = (err: Error, req: Request, res: Response, _next: NextFuncti
     res.status(500);
 
     if (req.accepts('html')) {
-        res.render('error', { main: titles[500], description: descriptions[500] });
+        res.render('error', { title: titles[500], description: descriptions[500] });
         return;
     }
 

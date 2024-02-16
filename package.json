@@ -7,7 +7,7 @@
     "test": "nodemon",
     "build": "tsc -p . && cp .env dist/",
     "start": "node dist/server.ts",
-    "migrate-dev": "npx prisma migrate dev",
+    "sync-dev": "npx prisma db push",
     "reset-db": "npx prisma migrate reset",
     "deploy": "npx prisma migrate deploy"
   },
@@ -26,14 +26,18 @@
   "homepage": "https://github.com/nekoture/url-shortener#readme",
   "dependencies": {
     "@prisma/client": "^5.9.1",
+    "@types/express-session": "^1.17.10",
     "app-root-path": "^3.1.0",
+    "bcryptjs": "^2.4.3",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-session": "^1.18.0",
     "git-commit-info": "^2.0.2",
     "morgan": "^1.10.0",
     "validator": "^13.11.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.11.19",
