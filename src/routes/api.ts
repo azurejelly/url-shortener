@@ -2,6 +2,7 @@ import { Router } from "express";
 import { checkKey } from "../middleware/auth.middleware";
 import prisma from "../lib/database";
 import logger from "../lib/logger";
+import validator, { isAlphanumeric, isURL } from "validator";
 
 const router = Router();
 
@@ -14,11 +15,16 @@ router.post('/api/create', checkKey, async(req, res, next) => {
         return;
     }
 
+    if (!isAlphanumeric(validator.blacklist(name, '-_')) || !isURL(url)) {
+        res.status(400).json({ status: 400, message: "either 'name' contains invalid characters or 'url' is not a valid url."});
+        return;
+    }
+
     const redirect = await prisma.redirection.findUnique({ where: { name: name }})
         .catch((err) => next(err));
 
     if (redirect) {
-        res.status(409).json({ status: 409, message: "There's already a shortened URL with that name." });
+        res.status(409).json({ status: 409, message: "there's already a shortened url with that name." });
         return;
     }
 
@@ -30,13 +36,13 @@ router.post('/api/create', checkKey, async(req, res, next) => {
     await prisma.redirection.create({ data: data })
         .catch((err) => next(err))
         .then(() => {
-            logger.debug(`A new shortened URL has been created under the name '${name}'. Redirects to ${url}.`);
-            res.status(200).json({ status: 200, message: "OK" });
+            logger.debug(`a new shortened url has been created under the name '${name}'. redirects to ${url}.`);
+            res.status(200).json({ status: 200, message: "shortened url created." });
         });
 });
 
 router.put('/api/update', checkKey, async(req, res, next) => {
-    res.status(418).json({ status: 418, message: "I'm a teapot" });
+    res.status(418).json({ status: 418, message: "i'm a teapot" });
 });
 
 router.delete('/api/delete', checkKey, async(req, res, next) => {
@@ -49,7 +55,7 @@ router.delete('/api/delete', checkKey, async(req, res, next) => {
 
     await prisma.redirection.delete({ where: { name: name }})
         .catch((err) => next(err))
-        .then(() => res.status(200).json({ status: 200, message: "OK" }))
+        .then(() => res.status(200).json({ status: 200, message: "shortened url deleted." }))
 });
 
 export default router;

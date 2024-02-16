@@ -20,7 +20,7 @@ const sampleUser = {
     await prisma.user.delete({ where: { email: "me@nekoture.xyz" }})
     await prisma.user.create({ data: sampleUser })
         .then(() => {
-            logger.info(`Generated random user with info: ${JSON.stringify(sampleUser)}`);
+            logger.info(`generated random user with info: ${JSON.stringify(sampleUser)}`);
         });
 })();
 
@@ -38,4 +38,4 @@ app.use(api);
 app.use(redirects);
 app.use(notFoundHandler, errorHandler);
 
-app.listen(port, () => logger.info(`Listening @ 127.0.0.1:${port}`));
+app.listen(port, () => logger.info(`listening @ 127.0.0.1:${port}`));
