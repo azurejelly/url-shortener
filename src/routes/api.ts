@@ -41,10 +41,6 @@ router.post('/api/create', checkKey, async(req, res, next) => {
         });
 });
 
-router.put('/api/update', checkKey, async(req, res, next) => {
-    res.status(418).json({ status: 418, message: "i'm a teapot" });
-});
-
 router.delete('/api/delete', checkKey, async(req, res, next) => {
     const name = req.body["name"];
 
