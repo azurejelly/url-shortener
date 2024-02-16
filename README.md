@@ -17,7 +17,7 @@ as of right now, you have two ways of running the app:
 ### nodemon (for development)
 in the root project directory, run the following command to generate and apply prisma migrations:
 ```sh
-npm run migrate-dev
+npm run sync-dev
 ```
 then, run the project using:
 ```sh
