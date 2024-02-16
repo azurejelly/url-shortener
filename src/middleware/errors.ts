@@ -31,7 +31,7 @@ const errorHandler = (req: Request, res: Response, _: NextFunction) => {
     res.status(404);
 
     if (req.accepts('html')) {
-        res.render('error', { main: titles[404], description: descriptions[404] });
+        res.render('error', { title: titles[404], description: descriptions[404] });
         return;
     }
 
