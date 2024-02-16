@@ -9,20 +9,23 @@ import admin from "./routes/admin";
 import api from "./routes/api";
 import prisma from "./lib/database";
 import { generateRandomString } from "./utils/random"
+import { isDevelopment } from "./utils/environment";
 
-const sampleUser = {
-    name: "Nekoture",
-    email: "me@nekoture.xyz",
-    key: generateRandomString(32)
-};
-
-(async() => {
-    await prisma.user.delete({ where: { email: "me@nekoture.xyz" }})
-    await prisma.user.create({ data: sampleUser })
-        .then(() => {
-            logger.info(`generated random user with info: ${JSON.stringify(sampleUser)}`);
-        });
-})();
+if (isDevelopment) {
+    const sampleUser = {
+        name: "Nekoture",
+        email: "me@nekoture.xyz",
+        key: generateRandomString(32)
+    };
+    
+    (async() => {
+        await prisma.user.delete({ where: { email: "me@nekoture.xyz" }})
+        await prisma.user.create({ data: sampleUser })
+            .then(() => {
+                logger.info(`generated random user with info: ${JSON.stringify(sampleUser)}`);
+            });
+    })();
+}
 
 const app = express();
 const port = parseInt(process.env.PORT || "3000");
