@@ -11,8 +11,9 @@ const descriptions = {
     404: "The requested resource was not found in this server.",
 };
 
-const notFoundHandler = (err: Error, req: Request, res: Response, _next: NextFunction) => {
+const errorHandler = (err: Error, req: Request, res: Response, _next: NextFunction) => {
     logger.error(`An internal error has occurred: ${err}`);
+    res.status(500);
 
     if (req.accepts('html')) {
         res.render('error', { main: titles[500], description: descriptions[500] });
@@ -27,7 +28,7 @@ const notFoundHandler = (err: Error, req: Request, res: Response, _next: NextFun
     res.send(descriptions[500]);
 };
 
-const errorHandler = (req: Request, res: Response, _: NextFunction) => {
+const notFoundHandler = (req: Request, res: Response, _: NextFunction) => {
     res.status(404);
 
     if (req.accepts('html')) {
