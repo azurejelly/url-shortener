@@ -4,7 +4,12 @@
   "description": "An open source URL shortener made with Express.js",
   "main": "src/server.ts",
   "scripts": {
-    "test": "nodemon"
+    "test": "nodemon",
+    "build": "tsc -p . && cp .env dist/",
+    "start": "node dist/server.ts",
+    "migrate-dev": "npx prisma migrate dev",
+    "reset-db": "npx prisma migrate reset",
+    "deploy": "npx prisma migrate deploy"
   },
   "repository": {
     "type": "git",
@@ -30,6 +35,7 @@
     "@types/express": "^4.17.21",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.11.19",
+    "nodemon": "^3.0.3",
     "prisma": "^5.9.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
