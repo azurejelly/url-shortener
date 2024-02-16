@@ -60,6 +60,4 @@ app.use(api);
 app.use(redirects);
 app.use(notFoundHandler, errorHandler);
 
-
-
 app.listen(port, () => logger.info(`listening @ 127.0.0.1:${port}`));
