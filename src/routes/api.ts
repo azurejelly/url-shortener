@@ -3,8 +3,14 @@ import { checkKey } from "../middleware/auth.middleware";
 import prisma from "../lib/database";
 import logger from "../lib/logger";
 import validator, { isAlphanumeric, isURL } from "validator";
+import gitCommitInfo from "git-commit-info";
 
 const router = Router();
+const commit = gitCommitInfo();
+
+router.get('/api', (_, res) => {
+    res.json({ status: 200, message: "meow", uptime: process.uptime(), build: { commit } });
+});
 
 router.post('/api/create', checkKey, async(req, res, next) => {
     const name: string | undefined = req.body["name"];
