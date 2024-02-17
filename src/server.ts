@@ -10,6 +10,7 @@ import api from "./routes/api";
 import { setupSampleUser } from "./utils/environment";
 import * as passportConfig from "./config/passport";
 import * as sessionConfig from "./config/session";
+import flash from "connect-flash";
 
 setupSampleUser();
 
@@ -19,6 +20,7 @@ const port = parseInt(process.env.PORT || "3000");
 app.use(morgan);
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
+app.use(flash());
 sessionConfig.configure(app);
 passportConfig.configure(app);
 app.set('view engine', 'ejs');

@@ -22,11 +22,11 @@ export const configure = (app: Express) => {
         const user = await prisma.user.findFirst({ where: { email: email }});
 
         if (!user) {
-            return done(null, false, { message: `invalid username or password.` });
+            return done(null, false, { message: `authentication failed. please check your email and password.` });
         }
 
         return compare(password, user.password) 
             ? done(null, user)
-            : done (null, false, { message: "invalid username or password." });
+            : done (null, false, { message: "authentication failed. please check your email and password." });
     }));
 }

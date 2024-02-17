@@ -10,19 +10,18 @@ router.get('/admin', (_, res) => {
 });
 
 router.get('/admin/login', (req, res) => {
-    res.render('login', { messages: req.session.messages });
+    const flash = req.flash("error");
+    res.render('login', { messages: flash.length == 0 ? null : flash }); // dumb as fuck, please fix
 })
 
 router.get('/admin/logout', (req, res) => {
-    req.session.destroy(() => {
-        res.redirect("/admin");
-    });
+    req.session.destroy(() => res.redirect("/admin"));
 });
 
 router.post('/admin/login', passport.authenticate('local', {
     successRedirect: '/admin/dashboard',
     failureRedirect: '/admin/login',
-    failureMessage: "authentication failed. please check your email and password."
+    failureFlash: true,
 }));
 
 router.post('/admin/updatePassword', (_, res) => {
