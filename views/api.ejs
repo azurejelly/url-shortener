@@ -1,5 +1,6 @@
 <%- include('./partials/head') %>
 
+<script src="/js/main.js"></script>
 <body>
     <div class="centered-text">
         <p><b>your current api key is:</b> <span id="api-key"><%- apiKey %></span></p>
@@ -10,18 +11,4 @@
         <button onclick="regenerateKey()">regenerate api key</button>
         <button onclick="window.location.href='/admin/dashboard'">go back</button>
     </div>
-    <script>
-        function regenerateKey() {
-            fetch('/api/regenerateKey', {
-                method: 'POST'
-            }).then(response => response.json())
-            .then(data => {
-                ["api-key", "create-api-key", "delete-api-key"].forEach((span) => {
-                    document.getElementById(span).innerText = data["data"]["key"];
-                });
-            }).catch(error => {
-                alert('could not obtain new api key: ' + error);
-            });
-        }
-    </script>
 </body>

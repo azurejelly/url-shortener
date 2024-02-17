@@ -44,3 +44,10 @@ a directory called `dist/` will be created containing all compiled code. run the
 ```sh
 npm run start
 ```
+
+## usage
+once the server is running, open up a browser and go to http://127.0.0.1:3000/. enter your account credentials, and you should be at the dashboard. don't expect too much from it, i don't like doing front-end at all and this is in fact my first ever try at using passport and similar libraries (if you know how to do some of this stuff in a better way, feel free to make a contribution).
+
+everything from here should be pretty straight-forward. there's an account management page, a button to logout, a table with all the shortened urls and you can also use the api to create shortened urls. there are 2 curl examples in the dashboard that are generated directly with your api key.
+
+be careful with streaming to twitch or other apps/sites as sensitive information might be displayed depending on what you visit.

@@ -1,6 +1,6 @@
 import morgan from "morgan";
 import logger from "../lib/logger";
-import { isDevelopment } from "../utils/environment";
+import { isDevelopment } from "../lib/environment";
 
 const skip = () => !isDevelopment;
 const stream = {

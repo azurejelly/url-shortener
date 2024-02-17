@@ -1,5 +1,5 @@
 import type { Express } from "express"
-import { isDevelopment } from "../utils/environment";
+import { isDevelopment } from "../lib/environment";
 import session from "express-session";
 
 declare module "express-session" {

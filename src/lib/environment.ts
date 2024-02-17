@@ -1,6 +1,6 @@
-import prisma from "../lib/prisma";
-import { encrypt } from "../lib/password";
-import logger from "../lib/logger";
+import prisma from "./prisma";
+import { encrypt } from "./password";
+import logger from "./logger";
 import { generateRandomString } from "./random";
 
 const env = process.env.NODE_ENV || "development";
@@ -15,7 +15,7 @@ const setupSampleUser = async () => {
     };
 
     await prisma.user.delete({ where: { email: "me@nekoture.xyz" } })
-        .catch((_) => logger.warn(`Failed to delete sample user!`));
+        .catch((_) => logger.warn(`failed to delete sample user!`));
 
     await prisma.user.create({ data: sampleUser })
         .then(() => {

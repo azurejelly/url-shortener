@@ -12,7 +12,7 @@ const descriptions = {
 };
 
 const errorHandler = (err: Error, req: Request, res: Response, _next: NextFunction) => {
-    logger.error(`An internal error has occurred: ${err}`);
+    logger.error(`an internal error has occurred: ${err.stack}`);
     res.status(500);
 
     if (req.accepts('html')) {

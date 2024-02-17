@@ -2,18 +2,18 @@
 
 <body>
     <%if (locals.messages) { %>
-        <div class="login-alert"><%-messages[0]-%></div>
+        <div class="alert-box"><%-messages[0]-%></div>
     <% } %>
     <form method="post" action="/admin/login" class="login-form">
         <h1>login</h1>
         <p>enter your user credentials in order to create or delete shortened urls.</p>
         <p>
             <label for="email">email:</label>
-            <input type="email" name="email" id="email">
+            <input type="email" name="email" id="email" placeholder="jdoe@example.com">
         </p>
         <p>
             <label for="password">password:</label>
-            <input name="password" type="password" id="password">
+            <input name="password" type="password" id="password" placeholder="••••••••••">
         </p>
         <input type="submit" value="submit">
     </form>

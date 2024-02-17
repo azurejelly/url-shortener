@@ -1,0 +1,24 @@
+<%- include('../partials/head') %>
+
+<%if (locals.error) { %>
+    <div class="alert-box"><%-error-%></div>
+<% } %>
+
+<script src="/js/main.js"></script>
+<h1 class="centered-text">add account</h1>
+<form method="post" action="/admin/dashboard/accounts/add" class="login-form">
+    <p>
+        <label for="email">email:</label>
+        <input type="email" name="email" id="email" placeholder="jdoe@example.com">
+    </p>
+    <p>
+        <label for="name">name:</label>
+        <input type="text" name="name" id="name" placeholder="John Doe">
+    </p>
+    <p>
+        <label for="password">password:</label>
+        <input name="password" type="password" id="password" placeholder="••••••••••">
+    </p>
+    <input style="display:inline;" type="submit" value="submit">
+    <button type="button" onclick="window.location.href='/admin/dashboard/accounts'">go back</button>
+</form>

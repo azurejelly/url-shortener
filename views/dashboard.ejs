@@ -1,9 +1,34 @@
 <%- include('./partials/head') -%>
 
-<p class="centered-text">welcome to the bathroom, <%- username -%></p>
+<script src="/js/main.js"></script>
 
+<h1 class="centered-text">dashboard</h1>
+<table id="redirects"> 
+    <tr> 
+        <th>shortened url</th> 
+        <th>target</th>
+        <th>options</th>
+    </tr> 
+    <% data.forEach(redirect => { %> 
+        <div class="scroll-table">
+        <tr> 
+            <td> 
+                <%= redirect.name %> 
+            </td> 
+            <td> 
+                <%= redirect.url %> 
+            </td> 
+            <td>
+                <button onclick="deleteRedirect('<%= redirect.name %>', this.parentNode.parentNode, '<%= key %>')">delete url</button>
+            </td>
+        </tr> 
+        </div>
+    <% }) %> 
+</table>
+<br>
 <div class="main-buttons">
+    <button onclick="createRedirect('<%= key %>')">create new url</button>   
     <button onclick="window.location.href='/admin/dashboard/accounts'">manage accounts</button>
-    <button onclick="window.location.href='/admin/dashboard/apiSettings'">api settings</button>
+    <button onclick="window.location.href='/admin/dashboard/api'">api settings</button>
     <button onclick="window.location.href='/admin/logout'">log out</button>
 </div>

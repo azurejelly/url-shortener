@@ -1,5 +1,5 @@
 import winston from "winston";
-import { isDevelopment } from "../utils/environment";
+import { isDevelopment } from "./environment";
 
 const level = () => {
     return isDevelopment ? 'debug' : 'warn'

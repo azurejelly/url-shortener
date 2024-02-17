@@ -1,0 +1,38 @@
+<%- include('../partials/head') %>
+
+<h1 class="centered-text">account management</h1>
+<script src="/js/main.js"></script>
+<table> 
+    <tr> 
+        <th>id</th> 
+        <th>username</th> 
+        <th>email</th>
+        <th colspan="2">options</th>
+    </tr> 
+    <% accounts.forEach(account => { %> 
+        <div class="scroll-table">
+        <tr> 
+            <td> 
+                <%= account.id %> 
+            </td> 
+            <td> 
+                <%= account.name %> 
+            </td> 
+            <td> 
+                <%= account.email %> 
+            </td> 
+            <td>
+                <button onclick="deleteAccount('<%= account.id %>', this.parentNode.parentNode)">delete account</button>
+            </td>
+            <td>
+                <button onclick="updatePassword('<%= account.id %>', this.parentNode.parentNode)">update password</button>
+            </td>
+        </tr> 
+        </div>
+    <% }) %> 
+</table> 
+<br>
+<div class="main-buttons">
+    <button onclick="window.location.href='/admin/dashboard/accounts/add'">add account</button>
+    <button onclick="window.location.href='/admin/dashboard'">go back</button>
+</div>

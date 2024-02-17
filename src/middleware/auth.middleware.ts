@@ -26,6 +26,11 @@ export const checkSession = (req: Request, res: Response, next: NextFunction) =>
         return next();
     }
 
+    if (req.is('application/json') || req.path.startsWith("/api")) {
+        res.status(401).json({ status: 401, message: "unauthorized" });
+        return;
+    }
+
     res.redirect('/admin/login');
 }
 
