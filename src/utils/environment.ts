@@ -23,4 +23,20 @@ const setupSampleUser = async () => {
         });
 };
 
-export { isDevelopment, setupSampleUser };
+const createDummyUsers = async (amount: number) => {
+    for (let i = 0; i < amount; i++) {
+        const sampleUser = {
+            name: "Dummy User",
+            email: generateRandomString(8) + "@example.com",
+            password: encrypt(generateRandomString(8)),
+            key: generateRandomString(32)
+        };
+    
+        await prisma.user.create({ data: sampleUser })
+            .then(() => {
+                logger.info(`generated random user with info: ${JSON.stringify(sampleUser)}`);
+            });
+    }
+}
+
+export { isDevelopment, setupSampleUser, createDummyUsers };
