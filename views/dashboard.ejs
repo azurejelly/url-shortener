@@ -1,6 +1,9 @@
 <%- include('./partials/head') -%>
 
-<p>welcome to the bathroom, <%- username -%></p>
-<form class="logout-form" action="/admin/logout" method="GET">
-    <button type="submit">log out</button>
-</form>
+<p class="centered-text">welcome to the bathroom, <%- username -%></p>
+
+<div class="main-buttons">
+    <button onclick="window.location.href='/admin/dashboard/accounts'">manage accounts</button>
+    <button onclick="window.location.href='/admin/dashboard/apiSettings'">api settings</button>
+    <button onclick="window.location.href='/admin/logout'">log out</button>
+</div>

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import prisma from "../lib/database";
+import prisma from "../lib/prisma";
 
 async function checkKey(req: Request, res: Response, next: NextFunction) {
     const auth: string | undefined = req.headers['authorization'];
@@ -21,12 +21,12 @@ async function checkKey(req: Request, res: Response, next: NextFunction) {
         });
 }
 
-export function checkSession(req: Request, res: Response, next: NextFunction) {
-    if (req.session.user) {
-        next();
-    } else {
-        res.redirect('/admin/login');
+export const checkSession = (req: Request, res: Response, next: NextFunction) => {
+    if (req.isAuthenticated()) {
+        return next();
     }
+
+    res.redirect('/admin/login');
 }
 
 export { checkKey }

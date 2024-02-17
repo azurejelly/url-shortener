@@ -1,5 +1,5 @@
 import { Router } from "express";
-import prisma from "../lib/database";
+import prisma from "../lib/prisma";
 
 const router = Router();
 const defaultRedirect = process.env.DEFAULT_REDIRECT || "https://www.google.com";

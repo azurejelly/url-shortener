@@ -1,8 +1,8 @@
 <%- include('./partials/head') -%>
 
 <body>
-    <%if (locals.message) { %>
-        <div class="login-alert"><%-message-%></div>
+    <%if (locals.messages) { %>
+        <div class="login-alert"><%-messages[0]-%></div>
     <% } %>
     <form method="post" action="/admin/login" class="login-form">
         <h1>login</h1>
@@ -15,8 +15,6 @@
             <label for="password">password:</label>
             <input name="password" type="password" id="password">
         </p>
-        <p>
-            <input type="submit" value="submit">
-        </p>
+        <input type="submit" value="submit">
     </form>
 </body>

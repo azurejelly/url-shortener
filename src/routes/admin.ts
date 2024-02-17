@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { authenticate } from "../lib/auth.helper";
 import { checkSession } from "../middleware/auth.middleware";
-import isEmail from "validator/lib/isEmail";
+import passport from "passport";
+import { User } from "@prisma/client";
 
 const router = Router();
 
@@ -9,8 +9,8 @@ router.get('/admin', (_, res) => {
     res.redirect('/admin/login');
 });
 
-router.get('/admin/login', (_, res) => {
-    res.render('login');
+router.get('/admin/login', (req, res) => {
+    res.render('login', { messages: req.session.messages });
 })
 
 router.get('/admin/logout', (req, res) => {
@@ -19,33 +19,24 @@ router.get('/admin/logout', (req, res) => {
     });
 });
 
-router.post('/admin/login', async (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
+router.post('/admin/login', passport.authenticate('local', {
+    successRedirect: '/admin/dashboard',
+    failureRedirect: '/admin/login',
+    failureMessage: "authentication failed. please check your email and password."
+}));
 
-    if (!email || !password || !isEmail(email)) {
-        res.render('login', { message: "authentication failed. please check your email and password." });
-        return;
-    }
-
-    const user = await authenticate(req.body.email, req.body.password);
-
-    if (user != null) {
-        req.session.regenerate(() => {
-            req.session.user = user!;
-            res.redirect('/admin/dashboard');
-        });
-    } else {
-        res.render('login', { message: "authentication failed. please check your email and password." });
-    }
-});
-
-router.post('/admin/updatePassword', (req, res) => {
+router.post('/admin/updatePassword', (_, res) => {
     res.render('error', { title: "not implemented", description: "this endpoint is not available yet" });
 });
 
 router.get('/admin/dashboard', checkSession, (req, res) => {
-    res.render('dashboard', { username: req.session.user });
+    const user = req.user as User;
+    res.render('dashboard', { username: user.name });
 });
+
+router.get('/admin/dashboard/apiSettings', checkSession, (req, res) => {
+    const user = req.user as User;
+    res.render('apiSettings', { apiKey: user.key });
+})
 
 export default router;

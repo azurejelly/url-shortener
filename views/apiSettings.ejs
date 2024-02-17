@@ -1,0 +1,27 @@
+<%- include('./partials/head') %>
+
+<body>
+    <div class="centered-text">
+        <p><b>your current api key is:</b> <span id="api-key"><%- apiKey %></span></p>
+        <p><b>to create a shortened URL:</b><br><code><span style="color: green;">$</span> curl http://127.0.0.1:3000/api/create -X POST -H 'Authorization: <span id="create-api-key"><%- apiKey %></span>' -H 'Content-Type: application/json' -d '{"name":"example","url":"https://google.com"}'</code></p>
+        <p><b>to delete a shortened URL:</b><br><code><span style="color: green;">$</span> curl http://127.0.0.1:3000/api/delete -X DELETE -H 'Authorization: <span id="delete-api-key"><%- apiKey %></span>' -H 'Content-Type: application/json' -d '{"name":"example"}'</code></p>
+    </div>
+    <div class="main-buttons">
+        <button onclick="regenerateKey()">regenerate api key</button>
+        <button onclick="window.location.href='/admin/dashboard'">go back</button>
+    </div>
+    <script>
+        function regenerateKey() {
+            fetch('/api/regenerateKey', {
+                method: 'POST'
+            }).then(response => response.json())
+            .then(data => {
+                ["api-key", "create-api-key", "delete-api-key"].forEach((span) => {
+                    document.getElementById(span).innerText = data["data"]["key"];
+                });
+            }).catch(error => {
+                alert('could not obtain new api key: ' + error);
+            });
+        }
+    </script>
+</body>

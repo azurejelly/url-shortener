@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { checkKey } from "../middleware/auth.middleware";
-import prisma from "../lib/database";
+import { checkKey, checkSession } from "../middleware/auth.middleware";
+import prisma from "../lib/prisma";
 import logger from "../lib/logger";
 import validator, { isAlphanumeric, isURL } from "validator";
 import gitCommitInfo from "git-commit-info";
+import { User } from "@prisma/client";
+import { generateRandomString } from "../utils/random";
 
 const router = Router();
 const commit = gitCommitInfo();
@@ -58,6 +60,16 @@ router.delete('/api/delete', checkKey, async(req, res, next) => {
     await prisma.redirection.delete({ where: { name: name }})
         .catch((err) => next(err))
         .then(() => res.status(200).json({ status: 200, message: "shortened url deleted." }))
+});
+
+router.post('/api/regenerateKey', checkSession, async(req, res, next) => {
+    const user = req.user as User;
+    user.key = generateRandomString(32);
+
+    await prisma.user.update({ where: { id: user.id }, data: user })
+        .catch((err) => next(err));
+
+    res.json({ status: 200, message: "api key regenerated", data: { key: user.key } });
 });
 
 export default router;
