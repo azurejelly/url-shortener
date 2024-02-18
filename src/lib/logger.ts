@@ -1,9 +1,7 @@
 import winston from "winston";
 import { isDevelopment } from "./environment";
 
-const level = () => {
-    return 'debug'//isDevelopment ? 'debug' : 'warn'
-}
+const level = () => isDevelopment ? 'debug' : process.env.LOG_LEVEL || 'info';
 
 const levels = {
     error: 0,
