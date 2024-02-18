@@ -3,6 +3,7 @@ import passportLocal from "passport-local";
 import type { Express } from "express";
 import prisma from "../lib/prisma";
 import { compare } from "../lib/password";
+import logger from "../lib/logger";
 
 const LocalStrategy = passportLocal.Strategy;
 
@@ -22,10 +23,14 @@ export const configure = (app: Express) => {
         const user = await prisma.user.findFirst({ where: { email: email }});
 
         if (!user) {
+            logger.debug(`no user by that name was found - authentication failed`);
             return done(null, false, { message: `authentication failed. please check your email and password.` });
         }
 
-        return compare(password, user.password) 
+        const comparison = compare(password, user.password);
+        logger.debug(`comparison between hashed and plain password result is ${comparison}`);
+
+        return comparison 
             ? done(null, user)
             : done (null, false, { message: "authentication failed. please check your email and password." });
     }));

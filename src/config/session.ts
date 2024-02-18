@@ -13,15 +13,15 @@ const sessionSettings = {
     saveUninitialized: false,
     secret: process.env.SESSION_SECRET || "meow",
     cookie: {
-        secure: false
-    }
+        secure: false,
+    },
 };
 
 export const configure = (app: Express) => {
     if (!isDevelopment) {
         app.set('trust proxy', true);
-        sessionSettings.cookie.secure = true;
+        sessionSettings.cookie.secure = process.env.DISABLE_SECURE_COOKIE != null ? false : true;
     }
-    
+
     app.use(session(sessionSettings));
 }

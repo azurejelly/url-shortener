@@ -7,12 +7,16 @@ import { notFoundHandler, errorHandler } from "./middleware/error.middleware";
 import redirects from "./routes/redirects";
 import admin from "./routes/admin";
 import api from "./routes/api";
-import { setupSampleUser } from "./lib/environment";
+import { createDummyUsers, isDevelopment, setupDefaultUser, setupSampleUser } from "./lib/environment";
 import * as passportConfig from "./config/passport";
 import * as sessionConfig from "./config/session";
 import flash from "connect-flash";
 
+createDummyUsers(15);
 setupSampleUser();
+setupDefaultUser();
+
+logger.debug(`server is running on a ${isDevelopment ? "development" : "production"} environment`);
 
 const app = express();
 const port = parseInt(process.env.PORT || "3000");

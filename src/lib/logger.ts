@@ -2,7 +2,7 @@ import winston from "winston";
 import { isDevelopment } from "./environment";
 
 const level = () => {
-    return isDevelopment ? 'debug' : 'warn'
+    return 'debug'//isDevelopment ? 'debug' : 'warn'
 }
 
 const levels = {
