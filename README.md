@@ -1,5 +1,5 @@
 # url-shortener
-an open source express.js url shortener written in typescript. with an admin panel, hopefully.
+an open source express.js url shortener written in typescript. maybe with a better-looking dashboard someday.
 
 ## setting up
 first, clone the repository using git:
@@ -10,6 +10,40 @@ then, install dependencies:
 ```sh
 npm install
 ```
+
+### environment variables
+now, rename (or copy) `.env.example` to `.env`:
+```sh
+cp .env.example .env # to copy
+mv .env.example .env # to rename
+```
+
+inside of it you should see the following:
+```properties
+PORT=3000
+LOG_LEVEL=info
+DATABASE_URL="file:./dev.db"
+DEFAULT_REDIRECT=https://www.google.com
+SESSION_SECRET=
+
+DEFAULT_ACCOUNT_EMAIL=
+DEFAULT_ACCOUNT_NAME=
+DEFAULT_ACCOUNT_PASSWORD=
+```
+
+the things you should change are:
+- `PORT`: the port the server should listen for connections on
+- `LOG_LEVEL`: the logging level, i suggest using `warn` once you're done setting up everything
+- `DATABASE_URL`: by default the server will use sqlite, but you can change to a supported database like postgresql or mysql. read more about it [here](https://www.prisma.io/docs/orm/reference/connection-urls).
+- `SESSION_SECRET`: required by [express-session](https://github.com/expressjs/session#secret). (tl;dr: generate a strong password)
+- `DEFAULT_REDIRECT`: where should the server redirect to when a shortened url is invalid?
+
+to setup a default account, set the following:
+- `DEFAULT_ACCOUNT_EMAIL`: the account email, used for logging in. (e.g. `aria@example.com`). if invalid, the server will not create a default account.
+- `DEFAULT_ACCOUNT_NAME`: the account username, used for identification purposes only. (e.g. `Aria`)
+- `DEFAULT_ACCOUNT_PASSWORD`: the account password. the server will warn you if you enter a not-so-strong password, but it will still create the account anyway. nevertheless, you should change it after you're done setting the account up.
+
+once the default account has been created, you can safely remove the environment variables related to it.
 
 ## running the app
 as of right now, you have two ways of running the app:
@@ -24,12 +58,6 @@ then, run the project using:
 npm test
 ```
 please note that when using nodemon, changing a source file will restart the app.
-
-#### resetting database
-you can also reset the local development database using:
-```sh
-npm run reset-db
-```
 
 ### building (for production)
 in the root project directory, run:
@@ -51,3 +79,9 @@ once the server is running, open up a browser and go to http://127.0.0.1:3000/. 
 everything from here should be pretty straight-forward. there's an account management page, a button to logout, a table with all the shortened urls and you can also use the api to create shortened urls. there are 2 curl examples in the dashboard that are generated directly with your api key.
 
 be careful with streaming to twitch or other apps/sites as sensitive information might be displayed depending on what you visit.
+
+## troubleshooting
+h-have you tried restarting the device?
+
+### session expires immediately after logging in
+this is very likely due to the server not running on HTTPS while on a production environment. the fix is to either setup HTTPS or set the `DISABLE_SECURE_COOKIE` as a workaround (please do the first one instead, we're on <insert current year here>).
