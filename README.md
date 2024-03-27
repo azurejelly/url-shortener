@@ -39,8 +39,8 @@ the things you should change are:
 - `DEFAULT_REDIRECT`: where should the server redirect to when a shortened url is invalid?
 
 to setup a default account, set the following:
-- `DEFAULT_ACCOUNT_EMAIL`: the account email, used for logging in. (e.g. `aria@example.com`). if invalid, the server will not create a default account.
-- `DEFAULT_ACCOUNT_NAME`: the account username, used for identification purposes only. (e.g. `Aria`)
+- `DEFAULT_ACCOUNT_EMAIL`: the account email, used for logging in. (e.g. `aira@example.com`). if invalid, the server will not create a default account.
+- `DEFAULT_ACCOUNT_NAME`: the account username, used for identification purposes only. (e.g. `Aira`)
 - `DEFAULT_ACCOUNT_PASSWORD`: the account password. the server will warn you if you enter a not-so-strong password, but it will still create the account anyway. nevertheless, you should change it after you're done setting the account up.
 
 once the default account has been created, you can safely remove the environment variables related to it.
@@ -84,4 +84,4 @@ be careful with streaming to twitch or other apps/sites as sensitive information
 h-have you tried restarting the device?
 
 ### session expires immediately after logging in
-this is very likely due to the server not running on HTTPS while on a production environment. the fix is to either setup HTTPS or set the `DISABLE_SECURE_COOKIE` as a workaround (please do the first one instead, we're on <insert current year here>).
+this is very likely due to the server not running on HTTPS while on a production environment. the fix is to either setup HTTPS or set the `DISABLE_SECURE_COOKIE` environment variable as a workaround (please do the first one instead, we're on 2024).
