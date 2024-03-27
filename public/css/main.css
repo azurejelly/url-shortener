@@ -63,6 +63,15 @@ th, td {
     font-style: normal;
 }
 
+.text-xs-center {
+    text-align: center;
+}
+
+.g-recaptcha {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
 .main-buttons {
     text-align: center;
 }

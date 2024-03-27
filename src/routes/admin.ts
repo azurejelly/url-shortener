@@ -1,11 +1,13 @@
-import { Router } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import { checkSession } from "../middleware/auth.middleware";
 import passport from "passport";
 import { User } from "@prisma/client";
 import prisma from "../lib/prisma";
 import { isEmail } from "validator";
 import { generateRandomString } from "../lib/random";
+import { RecaptchaV2 } from "express-recaptcha";
 
+const captcha = new RecaptchaV2(process.env.RECAPTCHA_SITE_KEY as string, process.env.RECAPTCHA_SECRET_KEY as string, { callback: 'captchaCallback' });
 const router = Router();
 
 router.get('/admin', (_, res) => {
@@ -14,18 +16,30 @@ router.get('/admin', (_, res) => {
 
 router.get('/admin/login', (req, res) => {
     const flash = req.flash("error");
-    res.render('login', { messages: flash.length == 0 ? null : flash }); // dumb as fuck, please change it if you're reading this
+    res.render('login', { captcha: captcha.render(), messages: flash.length == 0 ? null : flash }); // dumb as fuck, please change it if you're reading this
 })
 
 router.get('/admin/logout', (req, res) => {
     req.session.destroy(() => res.redirect("/admin"));
 });
 
-router.post('/admin/login', passport.authenticate('local', {
-    successRedirect: '/admin/dashboard',
-    failureRedirect: '/admin/login',
-    failureFlash: true,
-}));
+router.post('/admin/login',
+    captcha.middleware.verify,
+    (req: Request, res: Response, next: NextFunction) => {
+        if (req.recaptcha?.error) {
+            req.flash('error', "captcha verification failed. please try again.");
+            res.redirect('/admin/login');
+            return;
+        }
+    
+        next();
+    },
+    passport.authenticate('local', {
+        successRedirect: '/admin/dashboard',
+        failureRedirect: '/admin/login',
+        failureFlash: true,
+    })
+);
 
 router.get('/admin/dashboard', checkSession, async(req, res, next) => {
     const data = await prisma.redirection.findMany().catch((err) => next(err));

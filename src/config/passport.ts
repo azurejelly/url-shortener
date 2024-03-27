@@ -32,6 +32,6 @@ export const configure = (app: Express) => {
 
         return comparison 
             ? done(null, user)
-            : done (null, false, { message: "authentication failed. please check your email and password." });
+            : done(null, false, { message: "authentication failed. please check your email and password." });
     }));
 }
